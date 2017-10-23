@@ -3,7 +3,6 @@
 open System
 open System.Reactive.Linq
 open System.Windows.Input
-open DotNetKit.Functional.Commands
 open Reactive.Bindings
 open VainZero.Solotter
 
@@ -17,7 +16,8 @@ type AuthenticationPage(accessToken: ApplicationAccessToken, notifier: Notifier)
     Tweetinvi.AuthFlow.InitAuthentication(twitterCredential)
 
   let getPinCodeCommand =
-    UnitCommand
+    RaisableCommand.create
+      (fun () -> true)
       (fun () ->
         let url = authenticationContext.AuthorizationURL
         System.Diagnostics.Process.Start(url) |> ignore
