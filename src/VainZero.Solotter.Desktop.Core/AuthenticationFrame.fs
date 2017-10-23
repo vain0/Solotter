@@ -4,7 +4,6 @@ open System
 open System.Reactive.Disposables
 open System.Reactive.Linq
 open System.Reactive.Subjects
-open DotNetKit.FSharp
 open Reactive.Bindings
 open VainZero.Solotter
 

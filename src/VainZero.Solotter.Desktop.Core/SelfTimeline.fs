@@ -4,7 +4,6 @@ open System
 open System.Reactive.Disposables
 open System.Threading
 open System.Windows
-open DotNetKit.FSharp
 open DotNetKit.Functional.Commands
 open Reactive.Bindings
 open VainZero.Solotter
