@@ -4,5 +4,8 @@ DotNetKit.Core
 ReactiveProperty
 TweetinviAPI
 
+group Desktop
+    Prism.Wpf
+
 group Desktop.View
     MaterialDesignThemes

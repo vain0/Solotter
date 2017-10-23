@@ -3,9 +3,15 @@ source https://www.nuget.org/api/v2
 nuget System.Reactive
 nuget System.Reactive.Interfaces 3.0.0
 nuget DotNetKit.Core
+nuget Prism.Core
 nuget ReactiveProperty 3.0
 nuget TweetinviAPI
 nuget Autofac
+
+group Desktop
+    source https://www.nuget.org/api/v2
+
+    nuget Prism.Wpf
 
 group Desktop.View
     source https://www.nuget.org/api/v2

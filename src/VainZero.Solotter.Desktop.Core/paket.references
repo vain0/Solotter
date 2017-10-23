@@ -3,3 +3,6 @@ System.Reactive.Interfaces
 DotNetKit.Core
 ReactiveProperty
 TweetinviAPI
+
+group Desktop
+    Prism.Wpf
