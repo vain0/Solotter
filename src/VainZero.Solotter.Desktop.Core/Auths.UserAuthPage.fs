@@ -8,12 +8,12 @@ open VainZero.Solotter
 
 [<Sealed>]
 type UserAuthPage(accessToken: ApplicationAccessToken, notifier: Notifier) =
-  let twitterCredential =
+  let twitterCred =
     let t = accessToken
     Tweetinvi.Models.TwitterCredentials(t.ConsumerKey, t.ConsumerSecret)
 
   let authContext =
-    Tweetinvi.AuthFlow.InitAuthentication(twitterCredential)
+    Tweetinvi.AuthFlow.InitAuthentication(twitterCred)
 
   let getPinCodeCommand =
     RaisableCommand.create
@@ -31,18 +31,18 @@ type UserAuthPage(accessToken: ApplicationAccessToken, notifier: Notifier) =
 
   let authenticate () =
     let pinCode = pinCode.Value
-    let credential =
+    let cred =
       Tweetinvi.AuthFlow.CreateCredentialsFromVerifierCode(pinCode, authContext)
-    if credential |> isNull then
+    if cred |> isNull then
       notifier.NotifyInfo("Incorrect PinCode.")
       Observable.Never()
     else
       let userAccessToken =
         {
           AccessToken =
-            credential.AccessToken
+            cred.AccessToken
           AccessSecret =
-            credential.AccessTokenSecret
+            cred.AccessTokenSecret
         }
       Observable.Return(CompleteAuth (accessToken, userAccessToken))
 
