@@ -43,8 +43,4 @@
     <Window.Icon>
         <BitmapImage UriSource="Resources/Images/Solotter.ico" />
     </Window.Icon>
-
-    <Window.Content>
-        <desktopCore:AuthFrame />
-    </Window.Content>
 </Window>

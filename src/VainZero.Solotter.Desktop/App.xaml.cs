@@ -19,10 +19,6 @@ namespace VainZero.Solotter.Desktop
         public App()
         {
             InitializeComponent();
-
-            var settings = Desktop.Properties.Settings.Default;
-            var themeManager = new ThemeManager();
-            themeManager.Load(Resources, settings.ThemeColorName);
         }
     }
 }

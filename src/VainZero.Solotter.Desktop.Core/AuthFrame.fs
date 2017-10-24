@@ -16,13 +16,12 @@ type AuthFrame
   let dispose () =
     disposable.Dispose()
 
-  private new
+  static member Create
     ( initialState: AuthState
     , accessTokenRepo: AccessTokenRepo
+    , userConfig: UserConfig
+    , notifier: Notifier
     ) =
-    let notifier =
-      MessageBoxNotifier("Solotter")
-
     let disposables =
       new CompositeDisposable()
 
@@ -58,7 +57,7 @@ type AuthFrame
         new UserAuthPage(appAccessToken, notifier) :> IAuthPage
       | CompleteAuth (appAccessToken, userAccessToken) ->
         let auth = Auth.fromAccessToken appAccessToken userAccessToken
-        new SurfacePage(auth, notifier) :> IAuthPage
+        new SurfacePage(auth, userConfig, notifier) :> IAuthPage
 
     let content =
       authStateChanged
@@ -76,7 +75,11 @@ type AuthFrame
 
     new AuthFrame(content, disposables)
 
-  new(accessTokenRepo: AccessTokenRepo) =
+  static member Create
+    ( accessTokenRepo: AccessTokenRepo
+    , userConfig: UserConfig
+    , notifier: Notifier
+    ) =
     let accessToken = accessTokenRepo.Find()
     let initialState =
       match (accessToken.AppAccessToken, accessToken.UserAccessToken) with
@@ -87,10 +90,7 @@ type AuthFrame
         UserAuth appAccessToken
       | (Some appAccessToken, Some userAccessToken) ->
         CompleteAuth (appAccessToken, userAccessToken)
-    new AuthFrame(AppAuth, accessTokenRepo)
-
-  new() =
-    new AuthFrame(AccessTokenRepo.Create())
+    AuthFrame.Create(initialState, accessTokenRepo, userConfig, notifier)
 
   member this.Content =
     content

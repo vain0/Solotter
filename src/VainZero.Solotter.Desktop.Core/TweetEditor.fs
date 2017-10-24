@@ -7,7 +7,11 @@ open Reactive.Bindings
 open VainZero.Solotter
 
 [<Sealed>]
-type TweetEditor(twitter: Tweetinvi.Models.ITwitterCredentials, notifier: Notifier) =
+type TweetEditor
+  ( twitter: Tweetinvi.Models.ITwitterCredentials
+  , fontFamily: string
+  , notifier: Notifier
+  ) =
   [<Literal>]
   let TweetLength = 140
 
@@ -40,6 +44,9 @@ type TweetEditor(twitter: Tweetinvi.Models.ITwitterCredentials, notifier: Notifi
       .Select(fun _ -> submit ())
       .Publish()
       .Connect()
+
+  member this.FontFamily =
+    fontFamily
 
   member this.Text =
     text

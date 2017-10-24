@@ -1,0 +1,3 @@
+solotter/bin/**
+solotter/config/**
+!solotter/config/*.template.xml

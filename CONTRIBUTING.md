@@ -1,5 +1,5 @@
 ## Coding Convention
-- Abbreviation
+- Abbreviations:
     - **App**: Application.
     - **Auth**: Authenticate, authenticated, authentication.
     - **Cred**: Credential(s).
