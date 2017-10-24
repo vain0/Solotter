@@ -48,11 +48,12 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Types.fs" />
-    <Compile Include="AuthenticationPage.fs" />
+    <Compile Include="Auths.AppAuthPage.fs" />
+    <Compile Include="Auths.UserAuthPage.fs" />
     <Compile Include="TweetEditor.fs" />
     <Compile Include="SelfTimeline.fs" />
-    <Compile Include="AuthenticatedPage.fs" />
-    <Compile Include="AuthenticationFrame.fs" />
+    <Compile Include="SurfacePage.fs" />
+    <Compile Include="AuthFrame.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VainZero.Solotter.Core\VainZero.Solotter.Core.fsproj">

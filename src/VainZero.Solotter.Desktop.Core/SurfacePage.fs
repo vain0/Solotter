@@ -23,9 +23,9 @@ with
     }
 
 [<Sealed>]
-type AuthenticatedPage(authentication: Authentication, notifier: Notifier) =
+type SurfacePage(auth: Auth, notifier: Notifier) =
   let twitter =
-    authentication.Twitter
+    auth.Twitter
 
   let tweetEditor =
     new TweetEditor(twitter, notifier)
@@ -67,14 +67,14 @@ type AuthenticatedPage(authentication: Authentication, notifier: Notifier) =
   member this.Dispose() =
     dispose ()
 
-  interface IObservable<AuthenticationAction> with
+  interface IObservable<AuthState> with
     override this.Subscribe(observer) =
-      logoutCommand.Select(fun _ -> Logout).Subscribe(observer)
+      logoutCommand
+        .Select(fun _ -> UserAuth auth.AppAccessToken)
+        .Subscribe(observer)
 
   interface IDisposable with
     override this.Dispose() =
       this.Dispose()
 
-  interface IAuthenticationPage with
-    override this.Authentication =
-      Some authentication
+  interface IAuthPage

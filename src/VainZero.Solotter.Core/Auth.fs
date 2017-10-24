@@ -1,19 +1,19 @@
 ﻿namespace VainZero.Solotter
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-module Authentication =
-  let create applicationAccessToken userAccessToken twitter =
+module Auth =
+  let create appAccessToken userAccessToken twitter =
     {
-      ApplicationAccessToken =
-        applicationAccessToken
+      AppAccessToken =
+        appAccessToken
       UserAccessToken =
         userAccessToken
       Twitter =
         twitter
     }
 
-  let fromAccessToken applicationAccessToken userAccessToken =
-    let (a: ApplicationAccessToken) = applicationAccessToken
+  let fromAccessToken appAccessToken userAccessToken =
+    let (a: AppAccessToken) = appAccessToken
     let (u: UserAccessToken) = userAccessToken
     let twitter =
       Tweetinvi.Auth.SetUserCredentials

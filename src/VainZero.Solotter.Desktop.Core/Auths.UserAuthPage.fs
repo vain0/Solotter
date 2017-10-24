@@ -7,19 +7,19 @@ open Reactive.Bindings
 open VainZero.Solotter
 
 [<Sealed>]
-type AuthenticationPage(accessToken: ApplicationAccessToken, notifier: Notifier) =
-  let twitterCredential =
+type UserAuthPage(accessToken: AppAccessToken, notifier: Notifier) =
+  let twitterCred =
     let t = accessToken
     Tweetinvi.Models.TwitterCredentials(t.ConsumerKey, t.ConsumerSecret)
 
-  let authenticationContext =
-    Tweetinvi.AuthFlow.InitAuthentication(twitterCredential)
+  let authContext =
+    Tweetinvi.AuthFlow.InitAuthentication(twitterCred)
 
   let getPinCodeCommand =
     RaisableCommand.create
       (fun () -> true)
       (fun () ->
-        let url = authenticationContext.AuthorizationURL
+        let url = authContext.AuthorizationURL
         System.Diagnostics.Process.Start(url) |> ignore
       )
 
@@ -31,19 +31,20 @@ type AuthenticationPage(accessToken: ApplicationAccessToken, notifier: Notifier)
 
   let authenticate () =
     let pinCode = pinCode.Value
-    let context = authenticationContext
-    let credential =
-      Tweetinvi.AuthFlow.CreateCredentialsFromVerifierCode(pinCode, context)
-    if credential |> isNull then
+    let cred =
+      Tweetinvi.AuthFlow.CreateCredentialsFromVerifierCode(pinCode, authContext)
+    if cred |> isNull then
       notifier.NotifyInfo("Incorrect PinCode.")
       Observable.Never()
     else
-      {
-        AccessToken =
-          credential.AccessToken
-        AccessSecret =
-          credential.AccessTokenSecret
-      } |> Login |> Observable.Return
+      let userAccessToken =
+        {
+          AccessToken =
+            cred.AccessToken
+          AccessSecret =
+            cred.AccessTokenSecret
+        }
+      Observable.Return(CompleteAuth (accessToken, userAccessToken))
 
   let authenticated =
     authenticateCommand
@@ -72,7 +73,7 @@ type AuthenticationPage(accessToken: ApplicationAccessToken, notifier: Notifier)
   member this.Dispose() =
     dispose ()
 
-  interface IObservable<AuthenticationAction> with
+  interface IObservable<AuthState> with
     override this.Subscribe(observer) =
       authenticated.Subscribe(observer)
 
@@ -80,6 +81,4 @@ type AuthenticationPage(accessToken: ApplicationAccessToken, notifier: Notifier)
     override this.Dispose() =
       this.Dispose()
 
-  interface IAuthenticationPage with
-    override this.Authentication =
-      None
+  interface IAuthPage

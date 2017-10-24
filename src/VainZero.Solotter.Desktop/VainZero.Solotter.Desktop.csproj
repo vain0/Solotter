@@ -61,19 +61,23 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ThemeManager.cs" />
-    <Page Include="Authenticated\TimelineTemplate.xaml">
+    <Page Include="Authed\TimelineTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Authenticated\TweetEditorTemplate.xaml">
+    <Page Include="Authed\TweetEditorTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Authenticated\TweetTemplate.xaml">
+    <Page Include="Authed\TweetTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Authentication\AuthenticationPageTemplate.xaml">
+    <Page Include="Auths\AppAuthPageTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Auths\UserAuthPageTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -89,7 +93,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Authenticated\AuthenticatedPageTemplate.xaml">
+    <Page Include="Authed\SurfacePageTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -2,9 +2,23 @@
 
 open System.IO
 open System.Runtime.Serialization
+open System
+open System.Diagnostics
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module AccessToken =
+  let create a u: AccessToken =
+    {
+      AppAccessToken =
+        a
+      UserAccessToken =
+        u
+    }
+
+  let empty =
+    create None None
+
+type AccessTokenRepo(filePath: string) =
   let deserialize (stream: Stream) =
     let serializer = DataContractSerializer(typeof<AccessToken>)
     serializer.ReadObject(stream) :?> AccessToken
@@ -13,15 +27,23 @@ module AccessToken =
     let serializer = DataContractSerializer(typeof<AccessToken>)
     serializer.WriteObject(stream, accessToken)
 
-  let private filePath =
-    @"VainZero.Solotter.AccessToken.xml"
+  let file () =
+    FileInfo(filePath)
 
-  let load () =
-    use stream = File.OpenRead(filePath)
-    deserialize stream
+  member this.Find() =
+    try
+      use stream = File.OpenRead(filePath)
+      deserialize stream
+    with
+    | e ->
+      Debug.WriteLine(e |> string)
+      AccessToken.empty
 
-  let save accessToken =
-    let file = FileInfo(filePath)
-    if file.Exists then file.Delete()
+  member this.Save(accessToken: AccessToken) =
+    let file = file ()
     use stream = file.Create()
+    stream.SetLength(0L)
     accessToken |> serialize stream
+
+  static member Create() =
+    AccessTokenRepo(@"VainZero.Solotter.AccessToken.xml")
