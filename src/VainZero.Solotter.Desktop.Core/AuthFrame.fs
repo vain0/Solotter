@@ -79,7 +79,7 @@ type AuthFrame
   new(accessTokenRepo: AccessTokenRepo) =
     let accessToken = accessTokenRepo.Find()
     let initialState =
-      match (accessToken.ApplicationAccessToken, accessToken.UserAccessToken) with
+      match (accessToken.AppAccessToken, accessToken.UserAccessToken) with
       | (None, None)
       | (None, Some _) ->
         AppAuth

@@ -12,7 +12,7 @@
     abstract Confirm: string -> bool
 
   [<DataContract>]
-  type ApplicationAccessToken =
+  type AppAccessToken =
     {
       [<field: DataMember>]
       ConsumerKey:
@@ -37,8 +37,8 @@
   type AccessToken =
     {
       [<field: DataMember>]
-      ApplicationAccessToken:
-        option<ApplicationAccessToken>
+      AppAccessToken:
+        option<AppAccessToken>
       [<field: DataMember>]
       UserAccessToken:
         option<UserAccessToken>
@@ -46,8 +46,8 @@
 
   type Auth =
     {
-      ApplicationAccessToken:
-        ApplicationAccessToken
+      AppAccessToken:
+        AppAccessToken
       UserAccessToken:
         UserAccessToken
       Twitter:

@@ -2,18 +2,18 @@
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
 module Auth =
-  let create applicationAccessToken userAccessToken twitter =
+  let create appAccessToken userAccessToken twitter =
     {
-      ApplicationAccessToken =
-        applicationAccessToken
+      AppAccessToken =
+        appAccessToken
       UserAccessToken =
         userAccessToken
       Twitter =
         twitter
     }
 
-  let fromAccessToken applicationAccessToken userAccessToken =
-    let (a: ApplicationAccessToken) = applicationAccessToken
+  let fromAccessToken appAccessToken userAccessToken =
+    let (a: AppAccessToken) = appAccessToken
     let (u: UserAccessToken) = userAccessToken
     let twitter =
       Tweetinvi.Auth.SetUserCredentials

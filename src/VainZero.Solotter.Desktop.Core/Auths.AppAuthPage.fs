@@ -8,7 +8,7 @@ open VainZero.Solotter
 open System.Reactive.Disposables
 open System.Reactive.Subjects
 
-/// Represents a page to specify an application access token.
+/// Represents a page to specify an app access token.
 [<Sealed>]
 type AppAuthPage
   ( notifier: Notifier

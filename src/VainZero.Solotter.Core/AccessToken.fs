@@ -9,7 +9,7 @@ open System.Diagnostics
 module AccessToken =
   let create a u: AccessToken =
     {
-      ApplicationAccessToken =
+      AppAccessToken =
         a
       UserAccessToken =
         u

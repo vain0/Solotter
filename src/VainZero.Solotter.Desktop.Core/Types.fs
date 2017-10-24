@@ -4,13 +4,13 @@ open System
 open VainZero.Solotter
 
 type AuthState =
-  /// Indicates we have neither application/user access token.
+  /// Indicates we have neither app/user access token.
   | AppAuth
   /// Indicates we have an app access token but no user one.
   | UserAuth
-    of ApplicationAccessToken
+    of AppAccessToken
   | CompleteAuth
-    of ApplicationAccessToken * UserAccessToken
+    of AppAccessToken * UserAccessToken
 
 type IAuthPage =
   inherit IObservable<AuthState>

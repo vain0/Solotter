@@ -7,7 +7,7 @@ open Reactive.Bindings
 open VainZero.Solotter
 
 [<Sealed>]
-type UserAuthPage(accessToken: ApplicationAccessToken, notifier: Notifier) =
+type UserAuthPage(accessToken: AppAccessToken, notifier: Notifier) =
   let twitterCred =
     let t = accessToken
     Tweetinvi.Models.TwitterCredentials(t.ConsumerKey, t.ConsumerSecret)

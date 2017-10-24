@@ -70,7 +70,7 @@ type SurfacePage(auth: Auth, notifier: Notifier) =
   interface IObservable<AuthState> with
     override this.Subscribe(observer) =
       logoutCommand
-        .Select(fun _ -> UserAuth auth.ApplicationAccessToken)
+        .Select(fun _ -> UserAuth auth.AppAccessToken)
         .Subscribe(observer)
 
   interface IDisposable with
