@@ -38,7 +38,7 @@
     {
       [<field: DataMember>]
       ApplicationAccessToken:
-        ApplicationAccessToken
+        option<ApplicationAccessToken>
       [<field: DataMember>]
       UserAccessToken:
         option<UserAccessToken>

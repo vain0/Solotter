@@ -38,12 +38,14 @@ type UserAuthPage(accessToken: ApplicationAccessToken, notifier: Notifier) =
       notifier.NotifyInfo("Incorrect PinCode.")
       Observable.Never()
     else
-      {
-        AccessToken =
-          credential.AccessToken
-        AccessSecret =
-          credential.AccessTokenSecret
-      } |> Login |> Observable.Return
+      let userAccessToken =
+        {
+          AccessToken =
+            credential.AccessToken
+          AccessSecret =
+            credential.AccessTokenSecret
+        }
+      Observable.Return(CompleteAuth (accessToken, userAccessToken))
 
   let authenticated =
     authenticateCommand

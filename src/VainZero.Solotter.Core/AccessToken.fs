@@ -3,6 +3,20 @@
 open System.IO
 open System.Runtime.Serialization
 open System
+open System.Diagnostics
+
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+module AccessToken =
+  let create a u: AccessToken =
+    {
+      ApplicationAccessToken =
+        a
+      UserAccessToken =
+        u
+    }
+
+  let empty =
+    create None None
 
 type AccessTokenRepo(filePath: string) =
   let deserialize (stream: Stream) =
@@ -17,8 +31,13 @@ type AccessTokenRepo(filePath: string) =
     FileInfo(filePath)
 
   member this.Find() =
-    use stream = File.OpenRead(filePath)
-    deserialize stream
+    try
+      use stream = File.OpenRead(filePath)
+      deserialize stream
+    with
+    | e ->
+      Debug.WriteLine(e |> string)
+      AccessToken.empty
 
   member this.Save(accessToken: AccessToken) =
     let file = file ()

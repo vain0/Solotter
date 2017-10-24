@@ -25,6 +25,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="PrimitiveResource.xaml" />
 
+                <ResourceDictionary Source="Auths/AppAuthPageTemplate.xaml" />
                 <ResourceDictionary Source="Auths/UserAuthPageTemplate.xaml" />
 
                 <ResourceDictionary Source="Authed/SurfacePageTemplate.xaml" />

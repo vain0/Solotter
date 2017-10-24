@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Types.fs" />
+    <Compile Include="Auths.AppAuthPage.fs" />
     <Compile Include="Auths.UserAuthPage.fs" />
     <Compile Include="TweetEditor.fs" />
     <Compile Include="SelfTimeline.fs" />

@@ -17,8 +17,7 @@ type AuthFrame
     disposable.Dispose()
 
   private new
-    ( applicationAccessToken
-    , initialState: AuthState
+    ( initialState: AuthState
     , accessTokenRepo: AccessTokenRepo
     ) =
     let notifier =
@@ -35,20 +34,17 @@ type AuthFrame
       new Subject<AuthState>()
       |> tap disposables.Add
 
-    let saveAccessToken action =
-      let userAccessToken =
-        match action with
-        | Login userAccessToken ->
-          Some userAccessToken
-        | Logout ->
-          None
-      let accessToken =
-        {
-          ApplicationAccessToken =
-            applicationAccessToken
-          UserAccessToken =
-            userAccessToken
-        }
+    let accessTokenFromState =
+      function
+      | AppAuth ->
+        AccessToken.empty
+      | UserAuth appAccessToken ->
+        AccessToken.create (Some appAccessToken) None
+      | CompleteAuth (appAccessToken, userAccessToken) ->
+        AccessToken.create (Some appAccessToken) (Some userAccessToken)
+
+    let saveAccessToken state =
+      let accessToken = accessTokenFromState state
       accessTokenRepo.Save(accessToken)
 
     authStateChanged |> Observable.subscribe saveAccessToken
@@ -56,12 +52,13 @@ type AuthFrame
 
     let pageFromState action =
       match action with
-      | Login userAccessToken ->
-        let authentication =
-          Auth.fromAccessToken applicationAccessToken userAccessToken
-        new SurfacePage(authentication, notifier) :> IAuthPage
-      | Logout ->
-        new UserAuthPage(applicationAccessToken, notifier) :> IAuthPage
+      | AppAuth ->
+        new AppAuthPage(notifier, accessTokenRepo) :> IAuthPage
+      | UserAuth appAccessToken ->
+        new UserAuthPage(appAccessToken, notifier) :> IAuthPage
+      | CompleteAuth (appAccessToken, userAccessToken) ->
+        let auth = Auth.fromAccessToken appAccessToken userAccessToken
+        new SurfacePage(auth, notifier) :> IAuthPage
 
     let content =
       authStateChanged
@@ -81,15 +78,16 @@ type AuthFrame
 
   new(accessTokenRepo: AccessTokenRepo) =
     let accessToken = accessTokenRepo.Find()
-    let applicationAccessToken =
-      accessToken.ApplicationAccessToken
     let initialState =
-      match accessToken.UserAccessToken with
-      | Some userAccessToken ->
-        Login userAccessToken
-      | None ->
-        Logout
-    new AuthFrame(applicationAccessToken, Logout, accessTokenRepo)
+      match (accessToken.ApplicationAccessToken, accessToken.UserAccessToken) with
+      | (None, None)
+      | (None, Some _) ->
+        AppAuth
+      | (Some appAccessToken, None) ->
+        UserAuth appAccessToken
+      | (Some appAccessToken, Some userAccessToken) ->
+        CompleteAuth (appAccessToken, userAccessToken)
+    new AuthFrame(AppAuth, accessTokenRepo)
 
   new() =
     new AuthFrame(AccessTokenRepo.Create())
