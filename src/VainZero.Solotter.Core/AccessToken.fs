@@ -35,30 +35,32 @@ type AccessToken =
     UserAccessToken:
       option<UserAccessToken>
   }
-with
-  member this.Login(userAccessToken) =
-    { this with UserAccessToken = Some userAccessToken }
 
-  member this.Logout() =
-    { this with UserAccessToken = None }
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+module AccessToken =
+  let login userAccessToken accessToken =
+    { accessToken with UserAccessToken = Some userAccessToken }
 
-  static member Deserialize(stream: Stream) =
+  let logout accessToken =
+    { accessToken with UserAccessToken = None }
+
+  let deserialize (stream: Stream) =
     let serializer = DataContractSerializer(typeof<AccessToken>)
     serializer.ReadObject(stream) :?> AccessToken
 
-  member this.Serialize(stream: Stream) =
+  let serialize (stream: Stream) accessToken =
     let serializer = DataContractSerializer(typeof<AccessToken>)
-    serializer.WriteObject(stream, this)
+    serializer.WriteObject(stream, accessToken)
 
-  static member private FilePath =
+  let private filePath =
     @"VainZero.Solotter.AccessToken.xml"
 
-  static member Load() =
-    use stream = File.OpenRead(AccessToken.FilePath)
-    AccessToken.Deserialize(stream)
+  let load () =
+    use stream = File.OpenRead(filePath)
+    deserialize stream
 
-  member this.Save() =
-    let file = FileInfo(AccessToken.FilePath)
+  let save accessToken =
+    let file = FileInfo(filePath)
     if file.Exists then file.Delete()
     use stream = file.Create()
-    this.Serialize(stream)
+    accessToken |> serialize stream

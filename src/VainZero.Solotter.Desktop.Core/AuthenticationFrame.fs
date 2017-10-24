@@ -45,7 +45,7 @@ type AuthenticationFrame
           UserAccessToken =
             userAccessToken
         }
-      accessToken.Save()
+      accessToken |> AccessToken.save
 
     authenticationActions |> Observable.subscribe saveAccessToken
     |> disposables.Add
@@ -87,7 +87,7 @@ type AuthenticationFrame
     new AuthenticationFrame(applicationAccessToken, initialAction)
 
   new() =
-    new AuthenticationFrame(AccessToken.Load())
+    new AuthenticationFrame(AccessToken.load ())
 
   member this.Content =
     content
