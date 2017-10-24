@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Operators.fs" />
+    <Compile Include="Types.fs" />
     <Compile Include="Commands.RaisableCommand.fs" />
     <Compile Include="Notifier.fs" />
     <Compile Include="AccessToken.fs" />
