@@ -3,7 +3,6 @@
 open System
 open System.Reactive.Linq
 open System.Windows.Input
-open DotNetKit.FSharp
 open Reactive.Bindings
 open VainZero.Solotter
 
