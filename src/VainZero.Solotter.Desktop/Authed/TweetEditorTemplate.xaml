@@ -27,7 +27,7 @@
                 TextWrapping="Wrap"
                 TextAlignment="Left"
                 MaxLines="5"
-                FontFamily="{Binding TweetEditorFontFamily, Source={x:Static properties:Settings.Default}}"
+                FontFamily="{Binding FontFamily}"
                 Text="{Binding Text.Value, UpdateSourceTrigger=PropertyChanged}"
                 >
                 <TextBox.InputBindings>

@@ -16,3 +16,16 @@
   type IAuthPage =
     inherit IObservable<AuthState>
     inherit IDisposable
+
+  [<DataContract>]
+  type UserConfig =
+    {
+      [<field: DataMember>]
+      EditorFontFamily: string
+
+      [<field: DataMember>]
+      ThemeColorName: string
+    }
+
+  type UserConfigRepo =
+    IConfigRepo<UserConfig>

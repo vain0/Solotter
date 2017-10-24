@@ -19,6 +19,7 @@ type AuthFrame
   static member Create
     ( initialState: AuthState
     , accessTokenRepo: AccessTokenRepo
+    , userConfig: UserConfig
     , notifier: Notifier
     ) =
     let disposables =
@@ -56,7 +57,7 @@ type AuthFrame
         new UserAuthPage(appAccessToken, notifier) :> IAuthPage
       | CompleteAuth (appAccessToken, userAccessToken) ->
         let auth = Auth.fromAccessToken appAccessToken userAccessToken
-        new SurfacePage(auth, notifier) :> IAuthPage
+        new SurfacePage(auth, userConfig, notifier) :> IAuthPage
 
     let content =
       authStateChanged
@@ -74,7 +75,11 @@ type AuthFrame
 
     new AuthFrame(content, disposables)
 
-  static member Create(accessTokenRepo: AccessTokenRepo, notifier: Notifier) =
+  static member Create
+    ( accessTokenRepo: AccessTokenRepo
+    , userConfig: UserConfig
+    , notifier: Notifier
+    ) =
     let accessToken = accessTokenRepo.Find()
     let initialState =
       match (accessToken.AppAccessToken, accessToken.UserAccessToken) with
@@ -85,7 +90,7 @@ type AuthFrame
         UserAuth appAccessToken
       | (Some appAccessToken, Some userAccessToken) ->
         CompleteAuth (appAccessToken, userAccessToken)
-    AuthFrame.Create(initialState, accessTokenRepo, notifier)
+    AuthFrame.Create(initialState, accessTokenRepo, userConfig, notifier)
 
   member this.Content =
     content

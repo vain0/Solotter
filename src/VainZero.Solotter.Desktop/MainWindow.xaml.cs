@@ -31,8 +31,16 @@ namespace VainZero.Solotter.Desktop
             try
             {
                 var executablePath = Assembly.GetExecutingAssembly().Location;
+
+                var userConfigRepo = UserConfigModule.fileSystemConfigRepo(executablePath);
+                var userConfig = userConfigRepo.Find();
+                userConfigRepo.Save(userConfig);
+
+                var themeManager = new ThemeManager();
+                themeManager.Load(Resources, userConfig.ThemeColorName);
+
                 var accessTokenRepo = AccessTokenModule.fileSystemAccessTokenRepo(executablePath);
-                var authFrame = AuthFrame.Create(accessTokenRepo, notifier);
+                var authFrame = AuthFrame.Create(accessTokenRepo, userConfig, notifier);
 
                 Content = authFrame;
             }

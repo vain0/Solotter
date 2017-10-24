@@ -23,12 +23,12 @@ with
     }
 
 [<Sealed>]
-type SurfacePage(auth: Auth, notifier: Notifier) =
+type SurfacePage(auth: Auth, userConfig: UserConfig, notifier: Notifier) =
   let twitter =
     auth.Twitter
 
   let tweetEditor =
-    new TweetEditor(twitter, notifier)
+    new TweetEditor(twitter, userConfig.EditorFontFamily, notifier)
 
   let selfTimeline =
     new SelfTimeline(twitter, notifier)
