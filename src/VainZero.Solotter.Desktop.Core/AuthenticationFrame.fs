@@ -16,7 +16,11 @@ type AuthenticationFrame
   let dispose () =
     disposable.Dispose()
 
-  private new(applicationAccessToken, initialAction: AuthenticationAction) =
+  private new
+    ( applicationAccessToken
+    , initialAction: AuthenticationAction
+    , accessTokenRepo: AccessTokenRepo
+    ) =
     let notifier =
       MessageBoxNotifier("Solotter")
 
@@ -45,7 +49,7 @@ type AuthenticationFrame
           UserAccessToken =
             userAccessToken
         }
-      accessToken |> AccessToken.save
+      accessTokenRepo.Save(accessToken)
 
     authenticationActions |> Observable.subscribe saveAccessToken
     |> disposables.Add
@@ -75,7 +79,8 @@ type AuthenticationFrame
 
     new AuthenticationFrame(content, disposables)
 
-  new(accessToken: AccessToken) =
+  new(accessTokenRepo: AccessTokenRepo) =
+    let accessToken = accessTokenRepo.Find()
     let applicationAccessToken =
       accessToken.ApplicationAccessToken
     let initialAction =
@@ -84,10 +89,10 @@ type AuthenticationFrame
         Login userAccessToken
       | None ->
         Logout
-    new AuthenticationFrame(applicationAccessToken, initialAction)
+    new AuthenticationFrame(applicationAccessToken, initialAction, accessTokenRepo)
 
   new() =
-    new AuthenticationFrame(AccessToken.load ())
+    new AuthenticationFrame(AccessTokenRepo.Create())
 
   member this.Content =
     content
