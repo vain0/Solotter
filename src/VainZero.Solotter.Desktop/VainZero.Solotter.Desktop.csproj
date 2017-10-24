@@ -2762,4 +2762,7 @@
       </ItemGroup>
     </When>
   </Choose>
+  <PropertyGroup>
+    <PostBuildEvent>if "$(ConfigurationName)" == "Release" del $(TargetDir)\*.pdb &amp;&amp; del $(TargetDir)\*.xml</PostBuildEvent>
+  </PropertyGroup>
 </Project>
