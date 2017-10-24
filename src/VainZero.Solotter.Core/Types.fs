@@ -2,6 +2,7 @@
 
   open System.Runtime.Serialization
   open Prism.Commands
+  open System.IO
 
   type RaisableCommand<'TParameter> =
     DelegateCommand<'TParameter>
@@ -53,3 +54,17 @@
       Twitter:
         Tweetinvi.Models.ITwitterCredentials
     }
+
+  type IConfigShape<'TConfig> =
+    abstract IsPortable: bool
+    abstract Empty: 'TConfig
+
+    abstract ReadFromStream: Stream -> 'TConfig
+    abstract WriteToStream: 'TConfig * Stream -> unit
+
+  type IConfigRepo<'TConfig> =
+    abstract Find: unit -> 'TConfig
+    abstract Save: 'TConfig -> unit
+
+  type AccessTokenRepo =
+    IConfigRepo<AccessToken>

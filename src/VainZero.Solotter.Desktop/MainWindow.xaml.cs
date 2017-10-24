@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VainZero.Solotter;
 
 namespace VainZero.Solotter.Desktop
 {
@@ -28,7 +30,8 @@ namespace VainZero.Solotter.Desktop
             var notifier = new MessageBoxNotifier("Solotter");
             try
             {
-                var accessTokenRepo = AccessTokenRepo.CreateForWindows();
+                var executablePath = Assembly.GetExecutingAssembly().Location;
+                var accessTokenRepo = AccessTokenModule.fileSystemAccessTokenRepo(executablePath);
                 var authFrame = AuthFrame.Create(accessTokenRepo, notifier);
 
                 Content = authFrame;

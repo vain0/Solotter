@@ -52,6 +52,7 @@
     <Compile Include="Types.fs" />
     <Compile Include="Commands.RaisableCommand.fs" />
     <Compile Include="Notifier.fs" />
+    <Compile Include="Config.fs" />
     <Compile Include="AccessToken.fs" />
     <Compile Include="Auth.fs" />
   </ItemGroup>

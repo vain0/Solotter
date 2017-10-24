@@ -1,6 +1,7 @@
 ﻿namespace VainZero.Solotter.Desktop
 
   open System
+  open System.Runtime.Serialization
   open VainZero.Solotter
 
   type AuthState =
