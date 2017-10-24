@@ -23,9 +23,9 @@ with
     }
 
 [<Sealed>]
-type SurfacePage(authentication: Auth, notifier: Notifier) =
+type SurfacePage(auth: Auth, notifier: Notifier) =
   let twitter =
-    authentication.Twitter
+    auth.Twitter
 
   let tweetEditor =
     new TweetEditor(twitter, notifier)
@@ -70,7 +70,7 @@ type SurfacePage(authentication: Auth, notifier: Notifier) =
   interface IObservable<AuthState> with
     override this.Subscribe(observer) =
       logoutCommand
-        .Select(fun _ -> UserAuth authentication.ApplicationAccessToken)
+        .Select(fun _ -> UserAuth auth.ApplicationAccessToken)
         .Subscribe(observer)
 
   interface IDisposable with
@@ -79,4 +79,4 @@ type SurfacePage(authentication: Auth, notifier: Notifier) =
 
   interface IAuthPage with
     override this.Auth =
-      Some authentication
+      Some auth
