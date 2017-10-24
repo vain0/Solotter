@@ -9,8 +9,10 @@ type Authentication =
     Twitter:
       Tweetinvi.Models.ITwitterCredentials
   }
-with
-  static member Create(applicationAccessToken, userAccessToken, twitter) =
+
+[<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
+module Authentication =
+  let create applicationAccessToken userAccessToken twitter =
     {
       ApplicationAccessToken =
         applicationAccessToken
@@ -20,7 +22,7 @@ with
         twitter
     }
 
-  static member FromAccessToken(applicationAccessToken, userAccessToken) =
+  let fromAccessToken applicationAccessToken userAccessToken =
     let (a: ApplicationAccessToken) = applicationAccessToken
     let (u: UserAccessToken) = userAccessToken
     let twitter =
@@ -30,4 +32,4 @@ with
         , u.AccessToken
         , u.AccessSecret
         )
-    Authentication.Create(a, u, twitter)
+    create a u twitter

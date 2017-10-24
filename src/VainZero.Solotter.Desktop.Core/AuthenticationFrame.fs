@@ -54,7 +54,7 @@ type AuthenticationFrame
       match action with
       | Login userAccessToken ->
         let authentication =
-          Authentication.FromAccessToken(applicationAccessToken, userAccessToken)
+          Authentication.fromAccessToken applicationAccessToken userAccessToken
         new AuthenticatedPage(authentication, notifier) :> IAuthenticationPage
       | Logout ->
         new AuthenticationPage(applicationAccessToken, notifier) :> IAuthenticationPage
