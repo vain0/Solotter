@@ -2,11 +2,6 @@
 
 open System.Windows
 
-[<AbstractClass>]
-type Notifier() =
-  abstract NotifyInfo: string -> unit
-  abstract Confirm: string -> bool
-
 [<Sealed>]
 type MessageBoxNotifier(caption: string) =
   inherit Notifier()
