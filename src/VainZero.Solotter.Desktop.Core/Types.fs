@@ -15,5 +15,3 @@ type AuthState =
 type IAuthPage =
   inherit IObservable<AuthState>
   inherit IDisposable
-
-  abstract Auth: option<Auth>

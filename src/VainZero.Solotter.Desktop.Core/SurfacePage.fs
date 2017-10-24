@@ -77,6 +77,4 @@ type SurfacePage(auth: Auth, notifier: Notifier) =
     override this.Dispose() =
       this.Dispose()
 
-  interface IAuthPage with
-    override this.Auth =
-      Some auth
+  interface IAuthPage

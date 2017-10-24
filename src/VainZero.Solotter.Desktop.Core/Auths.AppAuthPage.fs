@@ -65,6 +65,4 @@ type AppAuthPage
     override this.Dispose() =
       this.Dispose()
 
-  interface IAuthPage with
-    override this.Auth =
-      None
+  interface IAuthPage

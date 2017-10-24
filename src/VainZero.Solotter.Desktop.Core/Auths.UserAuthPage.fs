@@ -81,6 +81,4 @@ type UserAuthPage(accessToken: ApplicationAccessToken, notifier: Notifier) =
     override this.Dispose() =
       this.Dispose()
 
-  interface IAuthPage with
-    override this.Auth =
-      None
+  interface IAuthPage
