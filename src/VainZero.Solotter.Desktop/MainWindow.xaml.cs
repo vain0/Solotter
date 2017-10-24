@@ -23,6 +23,8 @@ namespace VainZero.Solotter.Desktop
         public MainWindow()
         {
             InitializeComponent();
+
+            Content = new AuthFrame();
         }
     }
 }
