@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,7 +25,19 @@ namespace VainZero.Solotter.Desktop
         {
             InitializeComponent();
 
-            Content = new AuthFrame();
+            var notifier = new MessageBoxNotifier("Solotter");
+            try
+            {
+                var accessTokenRepo = AccessTokenRepo.Create();
+                var authFrame = AuthFrame.Create(accessTokenRepo, notifier);
+
+                Content = authFrame;
+            }
+            catch (Exception ex)
+            {
+                notifier.NotifyInfo("Failed to start. " + ex.ToString());
+                Application.Current.Shutdown(Marshal.GetHRForException(ex));
+            }
         }
     }
 }

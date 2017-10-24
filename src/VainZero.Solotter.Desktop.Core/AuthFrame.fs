@@ -16,13 +16,11 @@ type AuthFrame
   let dispose () =
     disposable.Dispose()
 
-  private new
+  static member Create
     ( initialState: AuthState
     , accessTokenRepo: AccessTokenRepo
+    , notifier: Notifier
     ) =
-    let notifier =
-      MessageBoxNotifier("Solotter")
-
     let disposables =
       new CompositeDisposable()
 
@@ -76,7 +74,7 @@ type AuthFrame
 
     new AuthFrame(content, disposables)
 
-  new(accessTokenRepo: AccessTokenRepo) =
+  static member Create(accessTokenRepo: AccessTokenRepo, notifier: Notifier) =
     let accessToken = accessTokenRepo.Find()
     let initialState =
       match (accessToken.AppAccessToken, accessToken.UserAccessToken) with
@@ -87,10 +85,7 @@ type AuthFrame
         UserAuth appAccessToken
       | (Some appAccessToken, Some userAccessToken) ->
         CompleteAuth (appAccessToken, userAccessToken)
-    new AuthFrame(AppAuth, accessTokenRepo)
-
-  new() =
-    new AuthFrame(AccessTokenRepo.Create())
+    AuthFrame.Create(initialState, accessTokenRepo, notifier)
 
   member this.Content =
     content
