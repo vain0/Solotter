@@ -12,14 +12,14 @@ type UserAuthPage(accessToken: ApplicationAccessToken, notifier: Notifier) =
     let t = accessToken
     Tweetinvi.Models.TwitterCredentials(t.ConsumerKey, t.ConsumerSecret)
 
-  let authenticationContext =
+  let authContext =
     Tweetinvi.AuthFlow.InitAuthentication(twitterCredential)
 
   let getPinCodeCommand =
     RaisableCommand.create
       (fun () -> true)
       (fun () ->
-        let url = authenticationContext.AuthorizationURL
+        let url = authContext.AuthorizationURL
         System.Diagnostics.Process.Start(url) |> ignore
       )
 
@@ -31,9 +31,8 @@ type UserAuthPage(accessToken: ApplicationAccessToken, notifier: Notifier) =
 
   let authenticate () =
     let pinCode = pinCode.Value
-    let context = authenticationContext
     let credential =
-      Tweetinvi.AuthFlow.CreateCredentialsFromVerifierCode(pinCode, context)
+      Tweetinvi.AuthFlow.CreateCredentialsFromVerifierCode(pinCode, authContext)
     if credential |> isNull then
       notifier.NotifyInfo("Incorrect PinCode.")
       Observable.Never()
