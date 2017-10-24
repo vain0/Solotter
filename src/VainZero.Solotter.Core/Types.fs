@@ -44,7 +44,7 @@
         option<UserAccessToken>
     }
 
-  type Authentication =
+  type Auth =
     {
       ApplicationAccessToken:
         ApplicationAccessToken

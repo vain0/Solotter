@@ -8,9 +8,9 @@ open Reactive.Bindings
 open VainZero.Solotter
 
 [<Sealed>]
-type AuthenticationFrame
+type AuthFrame
   private
-  ( content: IReadOnlyReactiveProperty<IAuthenticationPage>
+  ( content: IReadOnlyReactiveProperty<IAuthPage>
   , disposable: IDisposable
   ) =
   let dispose () =
@@ -18,7 +18,7 @@ type AuthenticationFrame
 
   private new
     ( applicationAccessToken
-    , initialAction: AuthenticationAction
+    , initialState: AuthState
     , accessTokenRepo: AccessTokenRepo
     ) =
     let notifier =
@@ -31,8 +31,8 @@ type AuthenticationFrame
       new SerialDisposable()
       |> tap disposables.Add
 
-    let authenticationActions =
-      new Subject<AuthenticationAction>()
+    let authStateChanged =
+      new Subject<AuthState>()
       |> tap disposables.Add
 
     let saveAccessToken action =
@@ -51,48 +51,48 @@ type AuthenticationFrame
         }
       accessTokenRepo.Save(accessToken)
 
-    authenticationActions |> Observable.subscribe saveAccessToken
+    authStateChanged |> Observable.subscribe saveAccessToken
     |> disposables.Add
 
-    let pageFromAction action =
+    let pageFromState action =
       match action with
       | Login userAccessToken ->
         let authentication =
-          Authentication.fromAccessToken applicationAccessToken userAccessToken
-        new AuthenticatedPage(authentication, notifier) :> IAuthenticationPage
+          Auth.fromAccessToken applicationAccessToken userAccessToken
+        new SurfacePage(authentication, notifier) :> IAuthPage
       | Logout ->
-        new AuthenticationPage(applicationAccessToken, notifier) :> IAuthenticationPage
+        new UserAuthPage(applicationAccessToken, notifier) :> IAuthPage
 
     let content =
-      authenticationActions
-        .StartWith(initialAction)
-        .Select(pageFromAction)
+      authStateChanged
+        .StartWith(initialState)
+        .Select(pageFromState)
         .Do(fun page ->
           pageDisposable.Disposable <-
             StableCompositeDisposable.Create
               ( page
-              , page |> Observable.subscribe authenticationActions.OnNext
+              , page |> Observable.subscribe authStateChanged.OnNext
               )
           )
         .ToReadOnlyReactiveProperty()
       |> tap disposables.Add
 
-    new AuthenticationFrame(content, disposables)
+    new AuthFrame(content, disposables)
 
   new(accessTokenRepo: AccessTokenRepo) =
     let accessToken = accessTokenRepo.Find()
     let applicationAccessToken =
       accessToken.ApplicationAccessToken
-    let initialAction =
+    let initialState =
       match accessToken.UserAccessToken with
       | Some userAccessToken ->
         Login userAccessToken
       | None ->
         Logout
-    new AuthenticationFrame(applicationAccessToken, initialAction, accessTokenRepo)
+    new AuthFrame(applicationAccessToken, Logout, accessTokenRepo)
 
   new() =
-    new AuthenticationFrame(AccessTokenRepo.Create())
+    new AuthFrame(AccessTokenRepo.Create())
 
   member this.Content =
     content

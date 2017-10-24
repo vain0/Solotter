@@ -3,13 +3,13 @@
 open System
 open VainZero.Solotter
 
-type AuthenticationAction =
+type AuthState =
   | Login
     of UserAccessToken
   | Logout
 
-type IAuthenticationPage =
-  inherit IObservable<AuthenticationAction>
+type IAuthPage =
+  inherit IObservable<AuthState>
   inherit IDisposable
 
-  abstract Authentication: option<Authentication>
+  abstract Auth: option<Auth>

@@ -7,7 +7,7 @@ open Reactive.Bindings
 open VainZero.Solotter
 
 [<Sealed>]
-type AuthenticationPage(accessToken: ApplicationAccessToken, notifier: Notifier) =
+type UserAuthPage(accessToken: ApplicationAccessToken, notifier: Notifier) =
   let twitterCredential =
     let t = accessToken
     Tweetinvi.Models.TwitterCredentials(t.ConsumerKey, t.ConsumerSecret)
@@ -72,7 +72,7 @@ type AuthenticationPage(accessToken: ApplicationAccessToken, notifier: Notifier)
   member this.Dispose() =
     dispose ()
 
-  interface IObservable<AuthenticationAction> with
+  interface IObservable<AuthState> with
     override this.Subscribe(observer) =
       authenticated.Subscribe(observer)
 
@@ -80,6 +80,6 @@ type AuthenticationPage(accessToken: ApplicationAccessToken, notifier: Notifier)
     override this.Dispose() =
       this.Dispose()
 
-  interface IAuthenticationPage with
-    override this.Authentication =
+  interface IAuthPage with
+    override this.Auth =
       None

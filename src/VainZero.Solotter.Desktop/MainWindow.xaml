@@ -25,15 +25,15 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="PrimitiveResource.xaml" />
 
-                <ResourceDictionary Source="Authentication/AuthenticationPageTemplate.xaml" />
+                <ResourceDictionary Source="Auths/UserAuthPageTemplate.xaml" />
 
-                <ResourceDictionary Source="Authenticated/AuthenticatedPageTemplate.xaml" />
-                <ResourceDictionary Source="Authenticated/TimelineTemplate.xaml" />
-                <ResourceDictionary Source="Authenticated/TweetEditorTemplate.xaml" />
-                <ResourceDictionary Source="Authenticated/TweetTemplate.xaml" />
+                <ResourceDictionary Source="Authed/SurfacePageTemplate.xaml" />
+                <ResourceDictionary Source="Authed/TimelineTemplate.xaml" />
+                <ResourceDictionary Source="Authed/TweetEditorTemplate.xaml" />
+                <ResourceDictionary Source="Authed/TweetTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <DataTemplate DataType="{x:Type desktopCore:AuthenticationFrame}">
+            <DataTemplate DataType="{x:Type desktopCore:AuthFrame}">
                 <ContentPresenter Content="{Binding Content.Value}" />
             </DataTemplate>
         </ResourceDictionary>
@@ -44,6 +44,6 @@
     </Window.Icon>
 
     <Window.Content>
-        <desktopCore:AuthenticationFrame />
+        <desktopCore:AuthFrame />
     </Window.Content>
 </Window>

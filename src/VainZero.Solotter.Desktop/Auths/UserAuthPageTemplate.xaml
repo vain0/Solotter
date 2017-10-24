@@ -4,7 +4,7 @@
     xmlns:desktopCore="clr-namespace:VainZero.Solotter.Desktop;assembly=VainZero.Solotter.Desktop.Core"
     xmlns:local="clr-namespace:VainZero.Solotter.Desktop"
     >
-    <DataTemplate DataType="{x:Type desktopCore:AuthenticationPage}">
+    <DataTemplate DataType="{x:Type desktopCore:UserAuthPage}">
         <DataTemplate.Resources>
             <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                 <Setter Property="Margin" Value="5,2,5,2" />

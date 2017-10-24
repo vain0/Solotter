@@ -1,7 +1,7 @@
 ﻿namespace VainZero.Solotter
 
 [<CompilationRepresentation(CompilationRepresentationFlags.ModuleSuffix)>]
-module Authentication =
+module Auth =
   let create applicationAccessToken userAccessToken twitter =
     {
       ApplicationAccessToken =
