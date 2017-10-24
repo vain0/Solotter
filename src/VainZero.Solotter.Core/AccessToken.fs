@@ -45,5 +45,13 @@ type AccessTokenRepo(filePath: string) =
     stream.SetLength(0L)
     accessToken |> serialize stream
 
-  static member Create() =
-    AccessTokenRepo(@"VainZero.Solotter.AccessToken.xml")
+  static member CreateForWindows() =
+    let localAppDirectory =
+      Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+    let configDirectory =
+      Path.Combine(localAppDirectory, "VainZero.Solotter")
+    if Directory.Exists(configDirectory) |> not then
+      Directory.CreateDirectory(configDirectory) |> ignore
+    let filePath =
+      Path.Combine(configDirectory, @"AccessToken.xml")
+    AccessTokenRepo(filePath)

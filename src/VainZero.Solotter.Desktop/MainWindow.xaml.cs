@@ -28,7 +28,7 @@ namespace VainZero.Solotter.Desktop
             var notifier = new MessageBoxNotifier("Solotter");
             try
             {
-                var accessTokenRepo = AccessTokenRepo.Create();
+                var accessTokenRepo = AccessTokenRepo.CreateForWindows();
                 var authFrame = AuthFrame.Create(accessTokenRepo, notifier);
 
                 Content = authFrame;
