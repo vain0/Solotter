@@ -45,6 +45,20 @@ type SurfacePage(auth: Auth, userConfig: UserConfig, notifier: Notifier) =
   let logoutCommand =
     new ReactiveCommand()
 
+  let unsubmitCommandSubscription =
+    tweetEditor.UnsubmitCommand |> Observable.subscribe
+      (fun () ->
+        let latestTweet = selfTimeline.Timeline.Tweets |> Seq.tryHead
+        async {
+          match latestTweet with
+          | Some latestTweet ->
+            let! deleted = Tweet.deleteAsync twitter notifier latestTweet
+            return ()
+          | None ->
+            ()
+        } |> Async.Start
+      )
+
   let dispose () =
     logoutCommand.Dispose()
     selfTimeline.Dispose()

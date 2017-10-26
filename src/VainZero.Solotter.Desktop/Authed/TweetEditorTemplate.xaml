@@ -8,6 +8,10 @@
     >
     <DataTemplate DataType="{x:Type desktopCore:TweetEditor}">
         <DockPanel>
+            <DockPanel.InputBindings>
+                <KeyBinding Gesture="Alt+Delete" Command="{Binding UnsubmitCommand}" />
+            </DockPanel.InputBindings>
+
             <DockPanel DockPanel.Dock="Right" LastChildFill="False">
                 <Button
                     DockPanel.Dock="Bottom"
