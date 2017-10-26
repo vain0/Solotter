@@ -39,6 +39,9 @@ type TweetEditor
       )
     |> ignore
 
+  let unsubmitCommand =
+    new ReactiveCommand<unit>()
+
   let subscription =
     submitCommand
       .Select(fun _ -> submit ())
@@ -56,3 +59,6 @@ type TweetEditor
 
   member this.SubmitCommand =
     submitCommand
+
+  member this.UnsubmitCommand =
+    unsubmitCommand

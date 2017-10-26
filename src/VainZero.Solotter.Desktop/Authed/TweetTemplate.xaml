@@ -6,7 +6,7 @@
     xmlns:desktopCore="clr-namespace:VainZero.Solotter.Desktop;assembly=VainZero.Solotter.Desktop.Core"
     >
     <DataTemplate DataType="{x:Type desktopCore:Tweet}">
-        <ContentControl x:Name="tweet">
+        <UserControl x:Name="tweet" Background="Transparent">
             <ContentControl.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="_Copy" Command="{Binding CopyCommand}" />
@@ -36,6 +36,6 @@
                     Text="{Binding Text}"
                     />
             </StackPanel>
-        </ContentControl>
+        </UserControl>
     </DataTemplate>
 </ResourceDictionary>

@@ -26,6 +26,23 @@
                         <StackPanel Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
+
+                <ListBox.ItemContainerStyle>
+                    <Style
+                        TargetType="{x:Type ListBoxItem}"
+                        BasedOn="{StaticResource  MaterialDesignListBoxItem}"
+                        >
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter
+                                    Property="Foreground"
+                                    Value="{DynamicResource PrimaryHueLightBrush}"
+                                    />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Header}" />
