@@ -7,18 +7,29 @@ A twitter client for those who want to stay focused on the work.
 - Submit tweets.
 - Show your tweets.
 
+That's all.
+
+## Installation
+### Set up
+- Generate ConsumerKey and ConsumerSecret for you. (For free.)
+    - Create your account for [Application Management](https://apps.twitter.com/).
+    - Create new application to generate ConsumerKey and ConsumerSecret.
+        - Name, description and website are up to you. Callback URL should be empty.
+        - Ensure your token has access level "Read and write".
+- Set up Solotter.
+    - [Download the latest version of Solotter](https://github.com/vain0/VainZero.Solotter/releases/latest).
+    - Unzip.
+    - Execute `bin/Solotter.exe`.
+    - Follow the procedure.
+    - Configuration is automatically saved.
+
+### Unintall
+- Delete the local configuration directory:
+    - ``C:/Users/YOUR-NAME/AppData/Local/VainZero.Solotter``
+- Delete downloaded file.
+- Twitter app you created is no longer needed.
+
 ## Usage
-- [Download the latest release](https://github.com/vain0/VainZero.Solotter/releases/latest).
-- Unzip.
-- Execute `Solotter.exe`.
-
-## Build
-- Before build, restore packages by executing the following commands in the `sources` directory:
-
-```
-.paket\paket.bootstrapper.exe
-.paket\paket.exe install
-```
-
-- Build the solution with Visual Sudio 2015.
-- Add ``VainZero.Solotter.AccessToken.xml`` to the directory of the executable. It is included in release packages.
+### Hotkeys
+- ``Alt+Delete`` to delete your latest tweet.
+- ``Control+Shift+Q`` to logout.

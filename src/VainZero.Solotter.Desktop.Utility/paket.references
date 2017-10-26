@@ -1,0 +1,7 @@
+System.Reactive
+System.Reactive.Interfaces
+ReactiveProperty
+TweetinviAPI
+
+group Desktop
+    Prism.Wpf
