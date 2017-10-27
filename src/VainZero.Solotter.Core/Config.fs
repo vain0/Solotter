@@ -52,16 +52,9 @@ type FileSystemConfigRepo<'TConfig>
       Path.GetDirectoryName(executablePath)
     let rootDirectory =
       Path.GetDirectoryName(binDirectory)
-    let localDirectory () =
-      Path.Combine(rootDirectory, "local")
-    let configDirectory () =
-      Path.Combine(rootDirectory, "config")
     let directory =
-      let path =
-        if configShape.IsPortable
-        then configDirectory ()
-        else localDirectory ()
-      DirectoryInfo(path)
+      let name =  if configShape.IsPortable then "config" else "local"
+      DirectoryInfo(Path.Combine(rootDirectory, name))
     let storage =
       ConfigFileStorage(directory, fileName, configShape)
     FileSystemConfigRepo(storage)
