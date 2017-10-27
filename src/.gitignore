@@ -1,2 +1,3 @@
 solotter/bin/**
+solotter/local/**
 !solotter/config/**
