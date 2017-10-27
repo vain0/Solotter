@@ -48,21 +48,19 @@ type FileSystemConfigRepo<'TConfig>
     , configShape: IConfigShape<'TConfig>
     , executablePath: string
     ) =
-    let nonportableDirectory () =
-      let localAppDirectory =
-        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
-      Path.Combine(localAppDirectory, "VainZero.Solotter")
-    let portableDirectory () =
-      let binDirectory =
-        Path.GetDirectoryName(executablePath)
-      let rootDirectory =
-        Path.GetDirectoryName(binDirectory)
+    let binDirectory =
+      Path.GetDirectoryName(executablePath)
+    let rootDirectory =
+      Path.GetDirectoryName(binDirectory)
+    let localDirectory () =
+      Path.Combine(rootDirectory, "local")
+    let configDirectory () =
       Path.Combine(rootDirectory, "config")
     let directory =
       let path =
         if configShape.IsPortable
-        then portableDirectory ()
-        else nonportableDirectory ()
+        then configDirectory ()
+        else localDirectory ()
       DirectoryInfo(path)
     let storage =
       ConfigFileStorage(directory, fileName, configShape)

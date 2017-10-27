@@ -24,8 +24,6 @@ That's all.
     - Configuration is automatically saved.
 
 ### Unintall
-- Delete the local configuration directory:
-    - ``C:/Users/YOUR-NAME/AppData/Local/VainZero.Solotter``
 - Delete downloaded file.
 - Twitter app you created is no longer needed.
 
